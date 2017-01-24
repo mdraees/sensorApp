@@ -12,7 +12,13 @@
 
   <script type="text/javascript">
   	
-  		
+  		function onLoad(){
+
+  			// Assign the event handler to execute when a finger touches ('touchstart') or is removed from ('touchend') the screen
+ 
+			window.addEventListener('touchstart', handleTouchEvent, false);
+			window.addEventListener('touchend', handleTouchEvent, false);
+  		}
   		
   
 
@@ -40,10 +46,6 @@
 	touchCount.innerHTML = 'There are currently ' + allTouchesLength + ' touches on the screen.';
 }
  
-// Assign the event handler to execute when a finger touches ('touchstart') or is removed from ('touchend') the screen
- 
-window.addEventListener('touchstart', handleTouchEvent, false);
-window.addEventListener('touchend', handleTouchEvent, false);
 
 
   </script>
