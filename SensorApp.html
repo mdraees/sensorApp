@@ -15,7 +15,6 @@
 // Define an event handler function to execute when the device orientation changes
  
 var onOrientationChange = function() {
-
 	// The device is in portrait orientation if the device is held at 0 or 180 degrees
 	// The device is in landscape orientation if the device is at 90 or -90 degrees
 
@@ -24,8 +23,8 @@ var onOrientationChange = function() {
 	// Set the class of the <body> tag according to the orientation of the device
  
 	var res = isPortrait ? 'portrait' : 'landscape';
-	alert(res);
-	document.getElementById("touch-count").innerHTML = "orientation=="+res;
+	
+	document.getElementById("orientation").innerHTML = "orientation=="+res;
 }
  
 // Execute the event handler function when the browser tells us the device has 
@@ -42,8 +41,8 @@ onOrientationChange();
   </script>
 </head>
 
-<body >
+<body onload="onOrientationChange()">
   	Hello.
-  	<div id="touchCount"></div>
+  	<div id="orientation"></div>
 </body>
 </html>
