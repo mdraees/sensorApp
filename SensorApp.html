@@ -138,21 +138,27 @@
 
 
 		//Sensor 7 - Battery Sensor
-		// Get the current power level.
-		alert(navigator.battery);
-		var str = "Battery level= "+navigator.battery.level;
+		// Request the camera.
+navigator.getUserMedia(
+    // Constraints
+    {
+        video: true
+    },
+    // Success Callback
+    function(localMediaStream) {
+          // Get a reference to the video element on the page.
+        var vid = document.getElementById('camera-stream');
 
-		// Get the charging status (boolean).
-		str += "charging status= "+navigator.battery.charging;
-
-		// Find out how long until the battery is charged.
-		str += "charging Time= "+navigator.battery.chargingTime;
-
-		// Find out how long until the battery is empty.
-		str += "discharging Time= "+navigator.battery.dischargingTime;
-
-		
- 		document.getElementById("battorySensor").innerHTML = str;
+        // Create an object URL for the video stream and use this 
+        // to set the video source.
+        vid.src = window.URL.createObjectURL(localMediaStream);
+    },
+    // Error Callback
+    function(err) {
+        // Log the error to the console.
+        console.log('The following error occurred when trying to use getUserMedia: ' + err);
+    }
+);
   	}
 
 
@@ -160,7 +166,7 @@
 </head>
 
 <body onload="onload()">
-  	Welcome To Sensor APP
+  	<STRONG>Welcome To Sensor APP</STRONG>
   	
   	<table border="1px">
   		
@@ -199,5 +205,7 @@
   		</tr>
   	</tbody>
   	</table>
+
+  	 <video width="640" height="400" controls="controls" id="cameraStream">
 </body>
 </html>
