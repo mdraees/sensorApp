@@ -12,47 +12,36 @@
 
   <script type="text/javascript">
   	
-  		function onLoad(){
-  			alert("333")
-  			// Assign the event handler to execute when a finger touches ('touchstart') or is removed from ('touchend') the screen
+// Define an event handler function to execute when the device orientation changes
  
-			window.addEventListener('touchstart', handleTouchEvent, false);
-			window.addEventListener('touchend', handleTouchEvent, false);
-  		}
-  		
-  
-
-  		var handleTouchEvent = function(e) {
+var onOrientationChange = function() {
+ alert("here");
+	// The device is in portrait orientation if the device is held at 0 or 180 degrees
+	// The device is in landscape orientation if the device is at 90 or -90 degrees
+ alert(window.orientation);
+	var isPortrait = window.orientation % 180 === 0;
+ 	
+	// Set the class of the <body> tag according to the orientation of the device
  
-	// Get the list of all touches currently on the screen
- console.log(e);
-	var allTouches = e.touches,
-	    allTouchesLength = allTouches.length,
- 
-
-	// Get a reference to an element on the page to write the total number of touches 
-	// currently on the screen into
- 
-	    touchCountElem = document.getElementById("touch-count"); 
- 
-	// Prevent the default browser action from occurring when the user touches and
-	// holds their finger to the screen
- 
-	if (e.type === 'touchstart') {
-		e.preventDefault();
-	}
-	
-	// Write the number of current touches onto the page
- 
-	touchCount.innerHTML = 'There are currently ' + allTouchesLength + ' touches on the screen.';
+	var res = isPortrait ? 'portrait' : 'landscape';
+	document.getElementById("touch-count").innerHTML = res;
 }
+ 
+// Execute the event handler function when the browser tells us the device has 
+// changed orientation
+ 
+window.addEventListener('orientationchange', onOrientationChange, false);
+ 
+// Execute the same function on page load to set the initial <body> class
+ 
+onOrientationChange();
  
 
 
   </script>
 </head>
 
-<body onload="onLoad()">
+<body >
   	Hello.
   	<div id="touchCount"></div>
 </body>
