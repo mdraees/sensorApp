@@ -8,51 +8,68 @@
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
 
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
 
   <script type="text/javascript">
-  	
-// Define an event handler function to execute when the device orientation changes
- 
-var onOrientationChange = function() {
-	
+  		function onload(){
 
-	// An event listener for a DeviceProximityEvent.
-window.addEventListener('deviceproximity', function(event) {
-    // The maximum distance the sensor covers (in cm).
-    var max = event.max;
+  			//Sensor 1 - Geolocation 
+			navigator.geolocation.getCurrentPosition(function(position) {
+			    // Get the positioning coordinates.
+			    var lat = position.coords.latitude;
+			    var lon = position.coords.longitude;
 
-    // The minimum distance the sensor covers (in cm).
-    var min = event.min;
+			    document.getElementById("geolocationValue").innerHTML = "latitude = "+lat+" longitude = "+lon;
+			});
 
-    // The device proximity (in cm).
-    var proximity = event.value;
-});
 
-// An event listener for a UserProximityEvent.
-window.addEventListener('userproximity', function(event) {
-    if (event.near) {
-        alert("near")
-    } else {
-        alert("Far");
-    }
-});
+		//Sensor 2 - Device Orientation 
+		if (window.DeviceOrientationEvent) {
+		  // Create an event listener
+		  window.addEventListener('deviceorientation', function(event) {
+		      // Get the left-to-right tilt (in degrees).
+		    var tiltLR = event.gamma;
 
-}
- 
+		    // Get the front-to-back tilt (in degrees).
+		    var titleFB = event.beta;
 
- 
-// Execute the same function on page load to set the initial <body> class
- 
-onOrientationChange();
- 
+		      // Get the direction of the device (in degrees).
+		    var direction = event.alpha;
+
+		     document.getElementById("DeviceOrientation").innerHTML = "tiltLR = "+tiltLR+" titleFB = "+titleFB+" direction = "+direction;
+
+		  });
+		}else{
+			 document.getElementById("DeviceOrientation").innerHTML = "Browser Not supported";
+		}
+
+
+		
+
+  	}
 
 
   </script>
 </head>
 
-<body onload="onOrientationChange()">
+<body onload="onload()">
   	Welcome To Sensor APP
-  	<div id="orientation"></div>
+  	
+  	<table border="1px">
+  		
+  	<thead>
+  		<th>Sensor Type</th>
+  		<th>value</th>
+  	</thead>
+  	<tbody>
+  		<tr>
+  			<td>Geolocation</td>
+  			<td id="geolocationValue"></td>
+  		</tr>
+  		<tr>
+  			<td>Device Orientation</td>
+  			<td id="DeviceOrientation"></td>
+  		</tr>
+  	</tbody>
+  	</table>
 </body>
 </html>
