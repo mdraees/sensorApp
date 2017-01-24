@@ -21,7 +21,7 @@
 			    successCallback = function(position) {
 				    var lat = position.coords.latitude,
 		        	long = position.coords.longitude;
- 					  document.getElementById("geolocationValue").innerHTML = "latitude = "+lat+" longitude = "+lon;
+ 					  document.getElementById("geolocationValue").innerHTML = "latitude = "+lat+" longitude = "+long;
 		    
 	    		},
  
@@ -99,11 +99,59 @@
 	        var innerHTMLStr = 'Current acceleration: ' + maxAcc +  'm/s^2';
 	        innerHTMLStr += 'Value incl. gravity: ' + maxAccGravity + 'm/s^2';
 
-	        document.getElementById("touch-count").innerHTML = innerHTMLStr;
+	        document.getElementById("MostionSensor").innerHTML = innerHTMLStr;
     	};
     	window.addEventListener('devicemotion', handleDeviceMotionEvent, false);
 
 
+
+    	//Sensor 5 - ambient light sensor
+    	window.addEventListener('devicelight', function(event) {
+    		// Get the ambient light level in lux.
+    		var lightLevel = event.value;
+    		
+    		document.getElementById("lightSensor").innerHTML = lightSensor;
+		});
+
+
+    	//Sensor 6 - Proximity Sensor
+    	// An event listener for a DeviceProximityEvent.
+		window.addEventListener('deviceproximity', function(event) {
+		    // The maximum distance the sensor covers (in cm).
+		    var max = event.max;
+
+		    // The minimum distance the sensor covers (in cm).
+		    var min = event.min;
+
+		    // The device proximity (in cm).
+		    var proximity = event.value;
+		});
+
+		// An event listener for a UserProximityEvent.
+		window.addEventListener('userproximity', function(event) {
+		    if (event.near) {
+		       document.getElementById("proximitySensor").innerHTML = "Near";
+		    } else {
+		        document.getElementById("proximitySensor").innerHTML = "Far";
+		    }
+		});
+
+
+		//Sensor 7 - Battery Sensor
+		// Get the current power level.
+		var str = "Battery level= "+navigator.battery.level;
+
+		// Get the charging status (boolean).
+		str += "charging status= "+navigator.battery.charging;
+
+		// Find out how long until the battery is charged.
+		str += "charging Time= "+navigator.battery.chargingTime;
+
+		// Find out how long until the battery is empty.
+		str += "discharging Time= "+navigator.battery.dischargingTime;
+
+		
+ 		document.getElementById("battorySensor").innerHTML = str;
   	}
 
 
@@ -130,11 +178,23 @@
   		</tr>
   		<tr>
   			<td>Device Touch Sensor</td>
-  			<td id="touch-count"></td>
+  			<td id="touchCount"></td>
   		</tr>
   		<tr>
   			<td>Mostion Sensor</td>
   			<td id="MostionSensor"></td>
+  		</tr>
+  		<tr>
+  			<td>ambient light sensor</td>
+  			<td id="lightSensor"></td>
+  		</tr>
+  		<tr>
+  			<td>Proximity sensor</td>
+  			<td id="proximitySensor"></td>
+  		</tr>
+  		<tr>
+  			<td>Battory sensor</td>
+  			<td id="battorySensor"></td>
   		</tr>
   	</tbody>
   	</table>
