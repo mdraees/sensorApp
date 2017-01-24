@@ -13,37 +13,96 @@
   		function onload(){
 
   			//Sensor 1 - Geolocation 
-			navigator.geolocation.getCurrentPosition(function(position) {
-			    // Get the positioning coordinates.
-			    var lat = position.coords.latitude;
-			    var lon = position.coords.longitude;
+			if (navigator.geolocation) {
+ 
+				var mapElem = document.getElementById("map"),
+ 
+	
+			    successCallback = function(position) {
+				    var lat = position.coords.latitude,
+		        	long = position.coords.longitude;
+ 					  document.getElementById("geolocationValue").innerHTML = "latitude = "+lat+" longitude = "+lon;
+		    
+	    		},
+ 
+	    		errorCallback = function() {
+	          		
+	          		 document.getElementById("geolocationValue").innerHTML = "Browser not supported";
+	    		};
+ 
+				navigator.geolocation.watchPosition(successCallback, errorCallback, {
+					maximumAge: 1000
+				});
+			}else{
+				document.getElementById("geolocationValue").innerHTML = "Browser not supported";
+			}
 
-			    document.getElementById("geolocationValue").innerHTML = "latitude = "+lat+" longitude = "+lon;
-			});
+
+			//Sensor 2 - Device Orientation 
+			var onOrientationChange = function() {
+ 
+				// The device is in portrait orientation if the device is held at 0 or 180 degrees
+				// The device is in landscape orientation if the device is at 90 or -90 degrees
+ 
+				var isPortrait = window.orientation % 180 === 0;
+ 
+				// Set the class of the <body> tag according to the orientation of the device
+ 
+				document.getElementById("DeviceOrientation").innerHTML  = isPortrait ? 'portrait' : 'landscape';
+			}
+
+			if (window.DeviceOrientationEvent) {
+		  		window.addEventListener('orientationchange', onOrientationChange, false);
+			}else{
+				 document.getElementById("DeviceOrientation").innerHTML = "Browser Not supported";
+			}
 
 
-		//Sensor 2 - Device Orientation 
-		if (window.DeviceOrientationEvent) {
-		  // Create an event listener
-		  window.addEventListener('deviceorientation', function(event) {
-		      // Get the left-to-right tilt (in degrees).
-		    var tiltLR = event.gamma;
+		//Sensor 3 - Touch Sensor
 
-		    // Get the front-to-back tilt (in degrees).
-		    var titleFB = event.beta;
-
-		      // Get the direction of the device (in degrees).
-		    var direction = event.alpha;
-
-		     document.getElementById("DeviceOrientation").innerHTML = "tiltLR = "+tiltLR+" titleFB = "+titleFB+" direction = "+direction;
-
-		  });
-		}else{
-			 document.getElementById("DeviceOrientation").innerHTML = "Browser Not supported";
+		var handleTouchEvent = function(e) {
+ 
+			var allTouches = e.touches,
+	    	allTouchesLength = allTouches.length,
+ 
+	    	touchCountElem = document.getElementById("touch-count"); 
+ 
+			if (e.type === 'touchstart') {
+				e.preventDefault();
+			}
+ 
+			touchCount.innerHTML = 'Touch Count =' + allTouchesLength;
 		}
+ 
+		// Assign the event handler to execute when a finger touches ('touchstart') or is removed from ('touchend') the screen
+ 
+		window.addEventListener('touchstart', handleTouchEvent, false);
+		window.addEventListener('touchend', handleTouchEvent, false);
 
 
-		
+		//Sensor 4 - motion sensor
+		handleDeviceMotionEvent = function(e) {
+ 
+	        // Get the current acceleration values in 3 axes and find the greatest of these
+	 
+	        var acc = e.acceleration,
+	            maxAcc = Math.max(acc.x, acc.y, acc.z),
+	 
+	        // Get the acceleration values including gravity and find the greatest of these
+	 
+	            accGravity = e.accelerationIncludingGravity,
+	            maxAccGravity = Math.max(accGravity.x, accGravity.y, accGravity.z);
+	 
+	        // Output to the user the greatest current acceleration value in any axis, as
+	        // well as the greatest value in any axis including the effect of gravity
+	 
+	        var innerHTMLStr = 'Current acceleration: ' + maxAcc +  'm/s^2';
+	        innerHTMLStr += 'Value incl. gravity: ' + maxAccGravity + 'm/s^2';
+
+	        document.getElementById("touch-count").innerHTML = innerHTMLStr;
+    	};
+    	window.addEventListener('devicemotion', handleDeviceMotionEvent, false);
+
 
   	}
 
@@ -68,6 +127,14 @@
   		<tr>
   			<td>Device Orientation</td>
   			<td id="DeviceOrientation"></td>
+  		</tr>
+  		<tr>
+  			<td>Device Touch Sensor</td>
+  			<td id="touch-count"></td>
+  		</tr>
+  		<tr>
+  			<td>Mostion Sensor</td>
+  			<td id="MostionSensor"></td>
   		</tr>
   	</tbody>
   	</table>
