@@ -14,36 +14,19 @@
   	
   		function onLoad(){
 
-  			if (navigator.geolocation) {
- 
-	// Get a reference to a <div id="map"> tag on the page to insert the map into
- 
-	var mapElem = document.getElementById("map"),
- 
-	// Define a function to execute once the user’s location has been established,
-	// plotting their latitude and longitude as a map tile image
- 
-	    successCallback = function(position) {
-		    var lat = position.coords.latitude,
-		        long = position.coords.longitude;
- 				alert(lat);
-		    mapElem.innerHTML = '<img src="http://maps.googleapis.com/maps/api/staticmap?markers=' + lat + ',' + long + '&zoom=15&size=300x300&sensor=false" />';
-	    },
-	
-	// Define a function to execute if the user’s location couldn’t be established
- 
-	    errorCallback = function() {
-	          alert("Sorry! I couldn’t get your location.");
-	    };
- 
-	// Start watching the user’s location, updating once per second (1s = 1000ms)
-	// and execute the appropriate callback function based on whether the user
-	// was successfully located or not
- 
-	navigator.geolocation.watchPosition(successCallback, errorCallback, {
-		maximumAge: 1000
-	});
-}
+
+let sensor = new GeolocationSensor({ accuracy: "high" });
+
+sensor.onchange = function(event) {
+    var coords = [event.reading.latitude, event.reading.longitude];
+   alert(coords);
+};
+
+sensor.onerror = function(error) {
+    updateMap(error);
+};
+
+
   		}
 
 
