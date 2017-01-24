@@ -19,7 +19,7 @@ let sensor = new GeolocationSensor({ accuracy: "high" });
 
 sensor.onchange = function(event) {
     var coords = [event.reading.latitude, event.reading.longitude];
-   alert(coords);
+   alert("888->"+coords);
 };
 
 sensor.onerror = function(error) {
