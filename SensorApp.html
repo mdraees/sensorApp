@@ -16,16 +16,28 @@
  
 var onOrientationChange = function() {
 	
-	// The device is in portrait orientation if the device is held at 0 or 180 degrees
-	// The device is in landscape orientation if the device is at 90 or -90 degrees
-let sensor = new ProximitySensor();
-sensor.start();
-alert("hereddd");
-sensor.onchange = event => console.log(event.reading.distance);
 
-sensor.onerror = function(event) {
-    console.log(event.error.name, event.error.message);
-};
+	// An event listener for a DeviceProximityEvent.
+window.addEventListener('deviceproximity', function(event) {
+    // The maximum distance the sensor covers (in cm).
+    var max = event.max;
+
+    // The minimum distance the sensor covers (in cm).
+    var min = event.min;
+
+    // The device proximity (in cm).
+    var proximity = event.value;
+});
+
+// An event listener for a UserProximityEvent.
+window.addEventListener('userproximity', function(event) {
+    if (event.near) {
+        alert("near")
+    } else {
+        alert("Far");
+    }
+});
+
 }
  
 
@@ -40,7 +52,7 @@ onOrientationChange();
 </head>
 
 <body onload="onOrientationChange()">
-  	Hello Sensor
+  	Welcome To Sensor APP
   	<div id="orientation"></div>
 </body>
 </html>
