@@ -14,19 +14,34 @@
   	
   		function onLoad(){
 
-
-let sensor = new GeolocationSensor({ accuracy: "high" });
-
-sensor.onchange = function(event) {
-    var coords = [event.reading.latitude, event.reading.longitude];
-   alert("888->"+coords);
-};
-
-sensor.onerror = function(error) {
-    updateMap(error);
-};
-
-
+var handleTouchEvent = function(e) {
+ 
+	// Get the list of all touches currently on the screen
+ 
+	var allTouches = e.touches,
+	    allTouchesLength = allTouches.length,
+ 
+	// Get a reference to an element on the page to write the total number of touches 
+	// currently on the screen into
+ 
+	    touchCountElem = document.getElementById("touch-count"); 
+ 
+	// Prevent the default browser action from occurring when the user touches and
+	// holds their finger to the screen
+ 
+	if (e.type === 'touchstart') {
+		e.preventDefault();
+	}
+	
+	// Write the number of current touches onto the page
+ 
+	touchCount.innerHTML = 'There are currently ' + allTouchesLength + ' touches on the screen.';
+}
+ 
+// Assign the event handler to execute when a finger touches ('touchstart') or is removed from ('touchend') the screen
+ 
+window.addEventListener('touchstart', handleTouchEvent, false);
+window.addEventListener('touchend', handleTouchEvent, false);
   		}
 
 
