@@ -23,13 +23,13 @@
   
 
   		var handleTouchEvent = function(e) {
- alert("here");
+ 
 	// Get the list of all touches currently on the screen
- alert(e);
+ console.log(e);
 	var allTouches = e.touches,
 	    allTouchesLength = allTouches.length,
  
- 
+
 	// Get a reference to an element on the page to write the total number of touches 
 	// currently on the screen into
  
@@ -54,6 +54,6 @@
 
 <body onload="onLoad()">
   	Hello.
-  	<div id="touch-count"></div>
+  	<div id="touchCount"></div>
 </body>
 </html>
