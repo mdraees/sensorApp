@@ -20,7 +20,7 @@ var onOrientationChange = function() {
 	// The device is in landscape orientation if the device is at 90 or -90 degrees
 let sensor = new ProximitySensor();
 sensor.start();
-alert("hereddd");
+alert("hereddd222");
 sensor.onchange = event => console.log(event.reading.distance);
 
 sensor.onerror = function(event) {
